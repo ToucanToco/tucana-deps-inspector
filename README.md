@@ -1,5 +1,11 @@
 # Tucana dependency visualizer
 
-## About the code
+## Setup
 
-Web app powered by [Snowpack](https://www.snowpack.dev/)
+```sh
+git clone THIS_REPO
+npm install
+source deps.csv.sh PATH_TO_TUCANA > deps.csv
+node deps.json.js
+npm run start
+```
