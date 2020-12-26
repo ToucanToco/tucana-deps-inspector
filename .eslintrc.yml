@@ -9,4 +9,7 @@ parserOptions:
   sourceType: module
 plugins:
   - vue
-rules: {}
+rules:
+  max-len: off
+  no-restricted-syntax: off
+  no-continue: off
