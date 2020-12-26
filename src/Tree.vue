@@ -3,7 +3,7 @@
     <div
       v-for="prefix of modelValue"
       :key="prefix"
-      class="prefix"
+      class="u-clickable"
       @click="onPrefixClick($event, prefix)"
     >
       {{ prefix }}
@@ -48,10 +48,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.prefix:hover {
-  opacity: 0.5;
-  cursor: pointer;
-}
-</style>

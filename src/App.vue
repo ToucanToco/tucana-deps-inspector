@@ -1,17 +1,17 @@
 <template>
   <div class="app">
     <Tree v-model="prefixes"/>
-    <div>
-      TODO
-    </div>
+    <Graph :prefixes="prefixes"/>
   </div>
 </template>
 
 <script>
+import Graph from './Graph.vue';
 import Tree from './Tree.vue';
 
 export default {
   components: {
+    Graph,
     Tree,
   },
   data() {
@@ -27,6 +27,10 @@ body {
   background-color: #222;
   color: white;
   font-family: monospace;
+}
+.u-clickable:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
 </style>
 
@@ -47,5 +51,7 @@ body {
 }
 .app > div:nth-child(2) {
   width: calc(100vw - 400px);
+  height: 100vh;
+  overflow-y: auto;
 }
 </style>
