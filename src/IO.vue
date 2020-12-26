@@ -1,0 +1,119 @@
+<template>
+  <div>
+    <details>
+      <summary>Help</summary>
+      <p>Click to select</p>
+      <p>Ctrl+Click to unfold</p>
+      <p>Alt+Click to fold back</p>
+      <p>i = direct inward dependency: some file in the selected folder directly imports a file in this folder.</p>
+      <p>I = deep inward dependency: same, but imports of imports are counted.</p>
+      <p>o = direct outward dependency: same as i but reversed</p>
+      <p>O = deep outward dependency: same as I but reversed</p>
+    </details>
+    <div
+      v-for="prefix of prefixes"
+      :key="prefix"
+      class="u-clickable"
+      :class="{ '--selected': selected === prefix }"
+      @click="onPrefixClick($event, prefix)"
+    >
+      {{ dependences[prefix]?.[selected] ? 'o' : '&nbsp;' }}
+      {{ dependences[selected]?.[prefix] ? 'i' : '&nbsp;' }}
+      {{ deepDependences[prefix]?.[selected] ? 'O' : '&nbsp;' }}
+      {{ deepDependences[selected]?.[prefix] ? 'I' : '&nbsp;' }}
+      {{ prefix }}
+    </div>
+  </div>
+</template>
+
+<script>
+import deps from './deps.json';
+
+const dependsOn = (p1, p2) => deps
+  .filter(([file]) => file.startsWith(p1))
+  .filter(([, dependency]) => !dependency.startsWith(p1))
+  .some(([, dependency]) => dependency.startsWith(p2));
+
+const deepRange = (src, dependences) => {
+  const visited = new Set([]);
+  const toVisit = new Set([src]);
+  while (toVisit.size) {
+    const visiting = toVisit.values().next().value;
+    for (const dst in dependences[visiting]) {
+      if (!dependences[visiting][dst]) continue;
+      if (visited.has(dst)) continue;
+      toVisit.add(dst);
+    }
+    visited.add(visiting);
+    toVisit.delete(visiting);
+  }
+  visited.delete(src);
+  return visited;
+};
+
+export default {
+  data() {
+    return {
+      prefixes: ['src'],
+      selected: 'src',
+    };
+  },
+  computed: {
+    dependences() {
+      const dependences = {};
+      for (const p1 of this.prefixes) {
+        dependences[p1] = {};
+        for (const p2 of this.prefixes) {
+          if (p1 === p2) continue;
+          dependences[p1][p2] = dependsOn(p1, p2);
+        }
+      }
+      return dependences;
+    },
+    deepDependences() {
+      return Object.fromEntries(this.prefixes.map((prefix) => [
+        prefix,
+        Object.fromEntries([...deepRange(prefix, this.dependences).values()].map((v) => [v, true])),
+      ]));
+    },
+  },
+  methods: {
+    onPrefixClick(evt, prefix) {
+      if (evt.ctrlKey) {
+        this.expand(prefix);
+      } else if (evt.altKey) {
+        this.fold(prefix);
+      } else {
+        this.selected = prefix;
+      }
+    },
+    expand(prefix) {
+      const files = [...new Set(deps.flat())];
+      const prefixDepth = prefix.split('/').length;
+      const newPrefixes = [...new Set(
+        files
+          .filter((file) => file.startsWith(prefix))
+          .map((file) => file.split('/').slice(0, prefixDepth + 1).filter(Boolean).join('/')),
+      )];
+      this.prefixes = this.prefixes
+        .filter((p) => p !== prefix)
+        .concat(newPrefixes)
+        .sort();
+    },
+    fold(prefix) {
+      const splitPrefix = prefix.split('/');
+      const newPrefix = splitPrefix.slice(0, splitPrefix.length - 1).filter(Boolean).join('/');
+      this.prefixes = this.prefixes
+        .filter((p) => !p.startsWith(newPrefix))
+        .concat([newPrefix])
+        .sort();
+    },
+  },
+};
+</script>
+
+<style scoped>
+.--selected {
+  color: red;
+}
+</style>

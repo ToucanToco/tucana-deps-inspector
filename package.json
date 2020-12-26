@@ -4,7 +4,8 @@
     "build": "snowpack build"
   },
   "dependencies": {
-    "vue": "3.0.0"
+    "vue": "3.0.0",
+    "vue-router": "^4.0.1"
   },
   "devDependencies": {
     "@snowpack/plugin-vue": "^2.2.6",
