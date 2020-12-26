@@ -7,9 +7,9 @@
       :class="{ '--selected': selected === prefix }"
       @click="onPrefixClick($event, prefix)"
     >
-      {{ dependences[prefix]?.[selected] ? 'e' : '&nbsp;' }}
+      {{ dependences[prefix]?.[selected] ? 'o' : '&nbsp;' }}
       {{ dependences[selected]?.[prefix] ? 'i' : '&nbsp;' }}
-      {{ deepDependences[prefix]?.[selected] ? 'E' : '&nbsp;' }}
+      {{ deepDependences[prefix]?.[selected] ? 'O' : '&nbsp;' }}
       {{ deepDependences[selected]?.[prefix] ? 'I' : '&nbsp;' }}
       {{ prefix }}
     </div>
