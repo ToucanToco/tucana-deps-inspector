@@ -29,3 +29,7 @@ Inspect the dependencies across two folders. Useful to answer questions like *"w
 ## [inspect](http://localhost:8080/#/range)
 
 List the deep outward dependencies of files. Useful to answer questions like *"I have modified `src/a.js` and `src/b.js` in this PR, which are going to be the impacted files?"*.
+
+## [circular](http://localhost:8080/#/circular)
+
+Exhaustive list of circular dependencies
