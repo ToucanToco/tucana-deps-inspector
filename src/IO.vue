@@ -1,15 +1,5 @@
 <template>
   <div>
-    <details>
-      <summary>Help</summary>
-      <p>Click to select</p>
-      <p>Ctrl+Click to unfold</p>
-      <p>Alt+Click to fold back</p>
-      <p>i = direct inward dependency: some file in the selected folder directly imports a file in this folder.</p>
-      <p>I = deep inward dependency: same, but imports of imports are counted.</p>
-      <p>o = direct outward dependency: same as i but reversed</p>
-      <p>O = deep outward dependency: same as I but reversed</p>
-    </details>
     <div
       v-for="prefix of prefixes"
       :key="prefix"
