@@ -3,12 +3,16 @@ import IO from './IO.vue';
 import Inspect from './Inspect.vue';
 import Range from './Range.vue';
 
+export const routes = [
+  { path: '/io', name: 'io', component: IO },
+  { path: '/inspect', name: 'inspect', component: Inspect },
+  { path: '/range', name: 'range', component: Range },
+];
+
 export default createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/io', component: IO },
-    { path: '/inspect', component: Inspect },
-    { path: '/range', component: Range },
+    ...routes,
     { path: '/:pathMatch(.*)*', redirect: '/io' },
   ],
 });

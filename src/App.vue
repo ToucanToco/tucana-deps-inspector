@@ -1,13 +1,29 @@
 <template>
   <div>
     <nav>
-      <RouterLink to="/io">io</RouterLink>
-      <RouterLink to="/inspect">inspect</RouterLink>
-      <RouterLink to="/range">range</RouterLink>
+      <RouterLink
+        v-for="route of routes"
+        :key="route.name"
+        :to="route.path"
+      >
+        {{ route.name }}
+      </RouterLink>
     </nav>
     <RouterView/>
   </div>
 </template>
+
+<script>
+import { routes } from './router';
+
+export default {
+  data() {
+    return {
+      routes,
+    };
+  },
+};
+</script>
 
 <style>
 body {
