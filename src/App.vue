@@ -3,6 +3,7 @@
     <nav>
       <RouterLink to="/io">io</RouterLink>
       <RouterLink to="/inspect">inspect</RouterLink>
+      <RouterLink to="/range">range</RouterLink>
     </nav>
     <RouterView/>
   </div>
@@ -34,6 +35,17 @@ input {
   font-size: 1em;
 }
 input:focus {
+  border-color: white;
+}
+textarea {
+  width: 100%;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #888;
+  padding: 1em;
+  box-sizing: border-box;
+}
+textarea:focus {
   border-color: white;
 }
 </style>
