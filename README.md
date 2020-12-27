@@ -2,14 +2,15 @@
 
 This repo was created to understand the flow of imports and exports in Tucana, to determine the impact range of a file modification, to spot circular dependencies, to assert whether or not folders fit a desired dependency graph, and more.
 
-It is based on [a shell script](./deps.csv.sh) that computes all imports and requires of tucana and does [a csv build](./deps.csv) of them. The line `src/a.js,src/b.js` means that `src/a.js` does an import or a require of `src/b.js`. Data files, images, and external libraries are ignored.
+It is based on [a shell script](./deps.csv.sh) that computes all imports and requires of tucana and does a csv build of them. The line `src/a.js,src/b.js` means that `src/a.js` does an import or a require of `src/b.js`. Data files, images, and external libraries are ignored.
 
-Fun things can be directly done with a bit of bash-fu, but the [Snowpack](https://www.snowpack.dev/) + [Vue 3](https://v3.vuejs.org/) app of this repo can do much more. Set up:
+Powerful things can be directly done with a bit of bash-fu, but the [Snowpack](https://www.snowpack.dev/) + [Vue 3](https://v3.vuejs.org/) app of this repo can do much more. Set up:
 
 ```sh
 git clone THIS_REPO
+cd tucana-deps-inspector
 npm install
-source deps.csv.sh PATH_TO_TUCANA > deps.csv
+source deps.csv.sh PATH_TO_TUCANA > deps.csv # this might take a while
 node deps.json.js
 npm run start
 ```
@@ -28,7 +29,7 @@ Inspect the dependencies across two folders. Useful to answer questions like *"w
 
 ## [inspect](http://localhost:8080/#/range)
 
-List the deep outward dependencies of files. Useful to answer questions like *"I have modified `src/a.js` and `src/b.js` in this PR, which are going to be the impacted files?"*.
+List the deep outward dependencies of files. Useful to answer questions like *"I have modified `src/a.js` and `src/b.js` in this PR, what files are going to be impacted?"*.
 
 ## [circular](http://localhost:8080/#/circular)
 
