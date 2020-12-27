@@ -1,4 +1,4 @@
-# Tucana dependency visualizer
+# Tucana dependency inspector
 
 ## Setup
 
