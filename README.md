@@ -10,8 +10,7 @@ Powerful things can be directly done with a bit of bash-fu, but the [Snowpack](h
 git clone THIS_REPO
 cd tucana-deps-inspector
 npm install
-source deps.csv.sh PATH_TO_TUCANA > deps.csv # this might take a while
-node deps.json.js
+source build.sh TUCANA_PATH # this might take a while
 npm run start
 ```
 
@@ -34,3 +33,7 @@ List the deep outward dependencies of files. Useful to answer questions like *"I
 ## [circular](http://localhost:8080/#/circular)
 
 Exhaustive list of circular dependencies
+
+## [unimported](http://localhost:8080/#/unimported)
+
+Spot business files (=excludes media, css, test files, storybook) that are not imported by other business files

@@ -1,7 +1,17 @@
 #!/bin/sh
 
+# Usage
+if [ $# -ne 1 ]
+then
+  echo "Usage: source build.sh TUCANA_PATH"
+  return
+fi
+
+# Builds ./deps.csv
+echo > ./deps.csv
 cd $1
-for file in $(echo src/**/*.{vue,js,ts} | fmt -w 1 | grep -E -v '(test|specs|storybook).(js|ts)' | grep -v __mocks__)
+files=$(echo src/**/*.{vue,js,ts} | fmt -w 1 | grep -E -v '(test|specs|storybook).(js|ts)' | grep -v __mocks__ | grep -v fixtures)
+for file in $files
 do
   requires=$(cat $file | grep -o "require('[^']*')" | colrm 1 9 | rev | colrm 1 2 | rev)
   imports=$(cat $file | grep '^import ' | grep -o "'[^']*';$" | colrm 1 1 | rev | colrm 1 2 | rev)
@@ -25,7 +35,15 @@ do
       if [ -f $dep$ext ]; then dep=$dep$ext; break; fi
     done
     
-    echo $file,$dep
+    echo $file,$dep >> $OLDPWD/deps.csv
   done
 done
-cd - > /dev/null
+cd $OLDPWD
+
+# Builds ./unimported.txt
+imported=$(cat deps.csv | cut -d ',' -f 2 | sort | uniq)
+echo $files $files $imported | fmt -w 1 | sort | uniq -c | grep '^\s*2' | colrm 1 8 > ./unimported.txt
+
+# Converts ./deps.csv to ./src/deps.json
+# Converts ./unimported.txt to ./src/unimported.json
+node ./convert-to-json.js
