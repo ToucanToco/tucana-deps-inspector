@@ -15,9 +15,10 @@ compute_dependencies () {
     requires=$(cat $file | grep -o "require('[^']*')" | colrm 1 9 | rev | colrm 1 2 | rev)
     imports=$(cat $file | grep '^import ' | grep -o "'[^']*';$" | colrm 1 1 | rev | colrm 1 2 | rev)
     multiline_imports=$(cat $file | grep '^} from ' | colrm 1 8 | rev | colrm 1 2 | rev)
+    exports=$(cat $file | grep '^export .* from ' | grep -o "'.*'" | colrm 1 1 | rev | colrm 1 1 | rev)
     async_oneline_imports=$(cat $file | grep "[^{]import(.*'\S*')" | grep -o "'[^']*'" | colrm 1 1 | rev | colrm 1 1 | rev)
     async_multiline_imports=$(cat $file | grep -A 1 "import($" | grep -o "'\S*'" | colrm 1 1 | rev | colrm 1 1 | rev)
-    deps=$(echo $imports $multiline_imports $requires $async_oneline_imports $async_multiline_imports | fmt -w 1 | grep -v '^[a-z]' | grep -v '@[a-z]' | grep -E -v '(json|png|pug|scss|svg)$')
+    deps=$(echo $imports $multiline_imports $exports $requires $async_oneline_imports $async_multiline_imports | fmt -w 1 | grep -v '^[a-z]' | grep -v '@[a-z]' | grep -E -v '(json|png|pug|scss|svg)$')
     for dep in $deps
     do
       # resolves the @/ prefix, cf tsconfig and jsconfig
