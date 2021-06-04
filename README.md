@@ -36,4 +36,4 @@ Exhaustive list of circular dependencies
 
 ## [unimported](http://localhost:8080/#/unimported)
 
-Spot business files (=excludes media, css, test files, storybook) that are not imported by other business files
+Spot business files (=excludes media, css, test files, storybook) that are not imported by other files

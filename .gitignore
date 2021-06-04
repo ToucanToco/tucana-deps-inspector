@@ -1,8 +1,7 @@
-.build
 build
 deps.csv
+extended-deps.csv
 node_modules
 src/deps.json
 src/unimported.json
 unimported.txt
-web_modules
