@@ -1,10 +1,7 @@
 <template>
   <div>
     <p>
-      Found {{ unimported.length }} unimported files
-    </p>
-    <p>
-      They might be configs, root files, or used in test files.
+      Found {{ unimported.length }} files imported nowhere. They might still be configs or root files though.
     </p>
     <div v-for="file in unimported" :key="file">
       {{ file }}
