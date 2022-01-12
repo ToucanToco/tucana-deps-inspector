@@ -10,11 +10,5 @@
   },
   "plugins": [
     "@snowpack/plugin-vue"
-  ],
-  "install": [],
-  "installOptions": {},
-  "devOptions": {},
-  "buildOptions": {},
-  "proxy": {},
-  "alias": {}
+  ]
 }

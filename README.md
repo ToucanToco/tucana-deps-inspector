@@ -9,9 +9,9 @@ Powerful things can be directly done with a bit of bash-fu, but the [Snowpack](h
 ```sh
 git clone THIS_REPO
 cd tucana-deps-inspector
-npm install
+pnpm install
 source build.sh TUCANA_PATH # this might take a while
-npm run start
+pnpm run start
 ```
 
 ## [io](http://localhost:8080/#/io)
